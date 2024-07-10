@@ -452,7 +452,7 @@ The included templates apart from the default template are:
 @endif
 ```
 
-### Microsoft Teams - JSON
+### Microsoft Teams - Webhook - JSON 
 
 ```
 {
@@ -555,3 +555,84 @@ The included templates apart from the default template are:
 }
 ```
 
+
+### Microsoft Teams - workflow - JSON 
+```
+{
+  "type": "AdaptiveCard",
+  "version": "1.3",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "{{ $alert->title }}",
+      "weight": "Bolder",
+      "size": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "LibreNMS",
+      "spacing": "None"
+    },
+    {
+      "type": "FactSet",
+      "facts": [
+        {
+          "title": "Rule:",
+          "value": "[{{ $alert->name ?? $alert->rule }}](https://your.librenms.url/device/device={{ $alert->device_id }}/tab=alert/)"
+        },
+        {
+          "title": "Severity:",
+          "value": "{{ $alert->severity }}"
+        },
+        {
+          "title": "Unique-ID:",
+          "value": "{{ $alert->uid }}"
+        },
+        {
+          "title": "Timestamp:",
+          "value": "{{ $alert->timestamp }}"
+        },
+@if ($alert->state == 0)
+        {
+            "title": "Time elapsed:",
+            "value": "{{ $alert->elapsed }}"
+        },
+@endif        
+        {
+          "title": "Hostname:",
+          "value": "[{{ $alert->hostname }}](https://your.librenms.url/device/device={{ $alert->device_id }}/)"
+        },
+        {
+          "title": "Hardware:",
+          "value": "{{ $alert->hardware }}"
+        },
+        {
+          "title": "IP:",
+          "value": "{{ $alert->ip }}"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.OpenUrl",
+      "title": "View Details",
+      "url": "https://your.librenms.url/device/device={{ $alert->device_id }}/"
+    }
+  ],
+@if ($alert->state === 0)
+  "themeColor": "00FF00",
+@elseif ($alert->state === 1)
+  "themeColor": "FF0000",
+@elseif ($alert->state === 2)
+  "themeColor": "337AB7",
+@elseif ($alert->state === 3)
+  "themeColor": "FF0000",
+@elseif ($alert->state === 4)
+  "themeColor": "F0AD4E",
+@else
+  "themeColor": "337AB7",
+
+}
+```
