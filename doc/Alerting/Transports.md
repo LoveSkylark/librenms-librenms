@@ -573,6 +573,10 @@ themselves using JSON to get the full functionality.
 | WebHook URL | <https://outlook.office365.com/webhook/123456789> |
 | Use JSON? | x |
 
+> Microsoft is retiering [Office 365 connectors](https://devblogs.microsoft.com/microsoft365dev/retirement-of-office-365-connectors-within-microsoft-teams/) meaning webhooks will not work at the end of this year.
+> I order to send messages directly to Microsoft Tems you must now use [Workflows](https://www.microsoft.com/en-us/power-platform/products/power-automate) instead and you can opt to use [AdaptiveCards](https://adaptivecards.io/).
+
+
 ## Nagios Compatible
 
 The nagios transport will feed a FIFO at the defined location with the
